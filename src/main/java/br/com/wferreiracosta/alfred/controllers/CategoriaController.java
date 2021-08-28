@@ -3,10 +3,7 @@ package br.com.wferreiracosta.alfred.controllers;
 import br.com.wferreiracosta.alfred.models.Categoria;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -25,6 +22,12 @@ public class CategoriaController {
     public Optional<Categoria> findById(@PathVariable Integer id){
         log.info("[GET] Obtendo Categoria por id: ID = "+id);
         return this.categoriaService.findById(id);
+    }
+
+    @PostMapping
+    public Categoria save(@RequestBody Categoria categoria){
+        log.info("[POST] Salvando Categoria: "+categoria);
+        return this.categoriaService.save(categoria);
     }
 
 }

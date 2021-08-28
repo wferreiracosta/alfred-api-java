@@ -21,4 +21,9 @@ public class CategoriaServiceImpl implements CategoriaService {
         return this.categoriaRepository.findById(id);
     }
 
+    @Override
+    public Categoria save(Categoria categoria) {
+        return this.categoriaRepository.save(categoria);
+    }
+
 }

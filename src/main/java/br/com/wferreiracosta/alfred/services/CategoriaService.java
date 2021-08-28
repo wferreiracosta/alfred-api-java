@@ -8,4 +8,5 @@ public interface CategoriaService {
 
     public Optional<Categoria> findById(Integer id);
 
+    public Categoria save(Categoria categoria);
 }

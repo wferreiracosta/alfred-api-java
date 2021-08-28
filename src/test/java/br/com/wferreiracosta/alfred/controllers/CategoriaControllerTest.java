@@ -3,6 +3,7 @@ package br.com.wferreiracosta.alfred.controllers;
 import br.com.wferreiracosta.alfred.models.Categoria;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -28,6 +29,14 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
     @MockBean
     CategoriaService service;
 
+    public String asJsonString(Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Test
     @DisplayName("Deve buscar uma categoria existente e retornar ela")
     public void deveBuscarERetornarUmaCategoriaExistente() throws Exception {
@@ -46,6 +55,28 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(categoria.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoria.getNome()));
+    }
+
+    @Test
+    @DisplayName("Deve salvar uma categoria no banco de dados")
+    public void deveSalvarUmaCategoria() throws Exception {
+        Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
+
+        BDDMockito.given(this.service.save(categoria))
+                .willReturn(Categoria.builder().id(1).nome("Informatica").build());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(CATEGORIA_API)
+                .content(asJsonString(categoria))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoria.getNome()));
     }
 }

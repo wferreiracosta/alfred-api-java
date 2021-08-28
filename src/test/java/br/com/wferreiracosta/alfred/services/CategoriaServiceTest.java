@@ -40,4 +40,18 @@ public class CategoriaServiceTest extends ServicesTestsUtils {
         assertThat(categoriaRetornada.get().getNome()).isEqualTo(categoria.getNome());
     }
 
+    @Test
+    @DisplayName("Deve salvar uma categoria no banco de dados")
+    public void deveSalvarUmaCategoria(){
+        Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
+        Categoria categoriaSalva = Categoria.builder().id(1).nome("Informatica").build();
+
+        Mockito.when(this.categoriaRepository.save(categoria)).thenReturn(categoriaSalva);
+
+        Categoria categoriaRetornada = this.service.save(categoria);
+
+        assertThat(categoriaRetornada.getId()).isEqualTo(categoriaSalva.getId());
+        assertThat(categoriaRetornada.getNome()).isEqualTo(categoriaSalva.getNome());
+    }
+
 }

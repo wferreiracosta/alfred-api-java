@@ -28,4 +28,14 @@ public class CategoriaRepositoryTest extends RepositoriesTestsUtils {
         assertThat(categoriaRetornada.isPresent()).isTrue();
     }
 
+    @Test
+    @DisplayName("Deve salvar uma Categoria")
+    public void salvarCategoria(){
+        Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
+        Categoria categoriaSalva = this.repository.save(categoria);
+        assertThat(categoriaSalva.getId()).isNotNull();
+        assertThat(categoriaSalva.getId()).isEqualTo(categoria.getId());
+        assertThat(categoriaSalva.getNome()).isEqualTo(categoria.getNome());
+    }
+
 }

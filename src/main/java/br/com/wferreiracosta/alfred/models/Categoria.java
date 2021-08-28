@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@ToString
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,6 +26,7 @@ public class Categoria implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    @NotNull
     private String nome;
 
 }
