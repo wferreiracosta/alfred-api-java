@@ -1,6 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @ToString
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Categoria implements Serializable {
+public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,16 +24,24 @@ public class Categoria implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @NotNull
     private String nome;
+
+    private Double preco;
 
     @ToString.Exclude
     @Singular
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "PRODUTO_CATEGORIA",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
 
-    public Categoria(Integer id, String nome) {
+    public Produto(Integer id, String nome, Double preco) {
         this.id = id;
         this.nome = nome;
+        this.preco = preco;
     }
 }
