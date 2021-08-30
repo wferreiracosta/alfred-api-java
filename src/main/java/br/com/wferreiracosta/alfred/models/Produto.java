@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @ToString
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
