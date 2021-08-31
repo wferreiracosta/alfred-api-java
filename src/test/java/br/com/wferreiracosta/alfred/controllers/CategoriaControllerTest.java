@@ -59,6 +59,24 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
     }
 
     @Test
+    @DisplayName("Deve buscar uma categoria que não existe e retornar o status not_found")
+    public void deveBuscarUmaCategoriaQueNaoExistente() throws Exception {
+        Integer id = 1;
+        String msg = "Objeto não encontrado! Id: " + id;
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(CATEGORIA_API.concat("/"+id))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("status").value("404"))
+                .andExpect(MockMvcResultMatchers.jsonPath("msg").value(msg));
+    }
+
+    @Test
     @DisplayName("Deve salvar uma categoria no banco de dados")
     public void deveSalvarUmaCategoria() throws Exception {
         Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();

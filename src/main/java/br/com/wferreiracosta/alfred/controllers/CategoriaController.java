@@ -1,11 +1,10 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Categoria;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -19,9 +18,10 @@ public class CategoriaController {
     }
 
     @GetMapping(value = "/{id}")
-    public Optional<Categoria> findById(@PathVariable Integer id){
+    public Categoria findById(@PathVariable Integer id){
         log.info("[GET] Obtendo Categoria por id: ID = "+id);
-        return this.categoriaService.findById(id);
+        return this.categoriaService.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
     }
 
     @PostMapping
