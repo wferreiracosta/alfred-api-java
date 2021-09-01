@@ -1,8 +1,12 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
 import br.com.wferreiracosta.alfred.models.Categoria;
+import br.com.wferreiracosta.alfred.models.Cidade;
+import br.com.wferreiracosta.alfred.models.Estado;
 import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.repositories.CategoriaRepository;
+import br.com.wferreiracosta.alfred.repositories.CidadeRepository;
+import br.com.wferreiracosta.alfred.repositories.EstadoRepository;
 import br.com.wferreiracosta.alfred.repositories.ProdutoRepository;
 import br.com.wferreiracosta.alfred.services.DataBaseService;
 import org.springframework.stereotype.Service;
@@ -13,12 +17,15 @@ import java.util.Arrays;
 public class DataBaseServiceImpl implements DataBaseService {
 
     private final CategoriaRepository categoriaRepository;
-
     private final ProdutoRepository produtoRepository;
+    private final CidadeRepository cidadeRepository;
+    private final EstadoRepository estadoRepository;
 
-    public DataBaseServiceImpl(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository) {
+    public DataBaseServiceImpl(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository, CidadeRepository cidadeRepository, EstadoRepository estadoRepository) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
+        this.cidadeRepository = cidadeRepository;
+        this.estadoRepository = estadoRepository;
     }
 
     @Override
@@ -45,6 +52,19 @@ public class DataBaseServiceImpl implements DataBaseService {
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
+
+        Estado est1 = new Estado(null, "Minas Gerais");
+        Estado est2 = new Estado(null, "São Paulo");
+
+        Cidade c1 = new Cidade(null, "Uberlândia", est1);
+        Cidade c2 = new Cidade(null, "São Paulo", est2);
+        Cidade c3 = new Cidade(null, "Campinas", est2);
+
+        est1.getCidades().addAll(Arrays.asList(c1));
+        est2.getCidades().addAll(Arrays.asList(c2, c3));
+
+        estadoRepository.saveAll(Arrays.asList(est1, est2));
+        cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
 
 }
