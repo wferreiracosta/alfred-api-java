@@ -1,11 +1,13 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
 import br.com.wferreiracosta.alfred.models.*;
+import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.*;
 import br.com.wferreiracosta.alfred.services.DataBaseService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service
@@ -17,14 +19,21 @@ public class DataBaseServiceImpl implements DataBaseService {
     private final EstadoRepository estadoRepository;
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
+    private final PedidoRepository pedidoRepository;
+    private final PagamentoRepository pagamentoRepository;
 
-    public DataBaseServiceImpl(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository, CidadeRepository cidadeRepository, EstadoRepository estadoRepository, ClienteRepository clienteRepository, EnderecoRepository enderecoRepository) {
+    public DataBaseServiceImpl(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository,
+                               CidadeRepository cidadeRepository, EstadoRepository estadoRepository,
+                               ClienteRepository clienteRepository, EnderecoRepository enderecoRepository,
+                               PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
         this.cidadeRepository = cidadeRepository;
         this.estadoRepository = estadoRepository;
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     @Override
@@ -79,6 +88,26 @@ public class DataBaseServiceImpl implements DataBaseService {
 
         clienteRepository.saveAll(Arrays.asList(cli1,cli2));
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
+
+        LocalDateTime ped1LocalDateTime = LocalDateTime.of(2017, 9, 30, 10, 32);
+        Pedido ped1 = new Pedido(null, ped1LocalDateTime, cli1, e1);
+
+        LocalDateTime ped2LocalDateTime = LocalDateTime.of(2017, 10, 10, 19, 35);
+        Pedido ped2 = new Pedido(null, ped2LocalDateTime, cli2, e2);
+
+        Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+        ped1.setPagamento(pagto1);
+
+        LocalDateTime pagto2LocalDateTime = LocalDateTime.of(2017, 10, 20, 00, 00);
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, pagto2LocalDateTime,
+                null);
+        ped2.setPagamento(pagto2);
+
+        cli2.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
     }
 
 }
