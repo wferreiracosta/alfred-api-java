@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClienteRepositoryTest extends RepositoriesTestsUtils {
+class ClienteRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     TestEntityManager entityManager;
@@ -20,7 +20,7 @@ public class ClienteRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve salvar um Cliente")
-    public void salvarCliente(){
+    void salvarCliente(){
         Cliente cliente = new Cliente(null, "Pedro Silva", "pedro@silva.com", "73094044085", TipoCliente.PESSOAFISICA);
         Cliente clienteSalva = this.clienteRepository.save(cliente);
         assertThat(clienteSalva.getId()).isNotNull();

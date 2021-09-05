@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CidadeRepositoryTest extends RepositoriesTestsUtils {
+class CidadeRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     private CidadeRepository cidadeRepository;
 
     @Test
     @DisplayName("Deve salvar uma Cidade")
-    public void salvarCidade(){
+    void salvarCidade(){
         Cidade cidade = Cidade.builder().id(null).nome("São Paulo").build();
         Cidade cidadeSalva = this.cidadeRepository.save(cidade);
         assertThat(cidadeSalva.getId()).isNotNull();

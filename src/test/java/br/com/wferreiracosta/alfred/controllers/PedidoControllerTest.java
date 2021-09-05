@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @WebMvcTest(controllers = PedidoController.class)
-public class PedidoControllerTest extends ControllersTestsUtils {
+class PedidoControllerTest extends ControllersTestsUtils {
 
     static String PEDIDO_API = "/pedidos";
 
@@ -53,7 +53,7 @@ public class PedidoControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar um pedido existente e retornar")
-    public void deveBuscarERetornarUmPedidoExistente() throws Exception {
+    void deveBuscarERetornarUmPedidoExistente() throws Exception {
         Pedido pedido = this.getPedidoComPagamentoComCartao();
         pedido.setId(1);
 
@@ -74,7 +74,7 @@ public class PedidoControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar um pedido que não existe e retornar o status not_found")
-    public void deveBuscarUmPedidoQueNaoExistente() throws Exception {
+    void deveBuscarUmPedidoQueNaoExistente() throws Exception {
         Integer id = 1;
         String msg = "Pedido não encontrado! Id: " + id;
 

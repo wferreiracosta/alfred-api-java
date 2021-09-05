@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProdutoServiceTest  extends ServicesTestsUtils {
+class ProdutoServiceTest  extends ServicesTestsUtils {
 
     ProdutoService produtoService;
 
@@ -28,7 +28,7 @@ public class ProdutoServiceTest  extends ServicesTestsUtils {
 
     @Test
     @DisplayName("Deve retorna um produto por id")
-    public void deveRetornarProduto(){
+    void deveRetornarProduto(){
         Produto produto = new Produto(1, "Celular", 1.000);
 
         Mockito.when(this.produtoRepository.findById(produto.getId())).thenReturn(Optional.of(produto));

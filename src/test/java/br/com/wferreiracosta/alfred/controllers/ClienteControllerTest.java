@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @WebMvcTest(controllers = ClienteController.class)
-public class ClienteControllerTest extends ControllersTestsUtils {
+class ClienteControllerTest extends ControllersTestsUtils {
 
     static String CLIENTE_API = "/clientes";
 
@@ -54,7 +54,7 @@ public class ClienteControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar e retornar os dados de um cliente por id")
-    public void deveBuscarERetornarOsDadosDeUmClientePeloId() throws Exception {
+    void deveBuscarERetornarOsDadosDeUmClientePeloId() throws Exception {
         Cliente cliente = getCliente();
 
         BDDMockito.given(this.service.findById(cliente.getId()))
@@ -74,7 +74,7 @@ public class ClienteControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar um cliente que não existe e retornar o status not_found")
-    public void deveBuscarUmClienteQueNaoExistente() throws Exception {
+    void deveBuscarUmClienteQueNaoExistente() throws Exception {
         Integer id = 1;
         String msg = "Cliente não encontrado! Id: " + id;
 

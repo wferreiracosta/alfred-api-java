@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CategoriaRepositoryTest extends RepositoriesTestsUtils {
+class CategoriaRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     TestEntityManager entityManager;
@@ -21,16 +21,16 @@ public class CategoriaRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve obter uma categoria por id")
-    public void deveRetornaCategoria(){
+    void deveRetornaCategoria(){
         Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
         Categoria categoriaSalva = this.entityManager.persist(categoria);
         Optional<Categoria> categoriaRetornada = this.repository.findById(categoriaSalva.getId());
-        assertThat(categoriaRetornada.isPresent()).isTrue();
+        assertThat(categoriaRetornada).isPresent();
     }
 
     @Test
     @DisplayName("Deve salvar uma Categoria")
-    public void salvarCategoria(){
+    void salvarCategoria(){
         Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
         Categoria categoriaSalva = this.repository.save(categoria);
         assertThat(categoriaSalva.getId()).isNotNull();

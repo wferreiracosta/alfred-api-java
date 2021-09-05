@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClienteServiceTest extends ServicesTestsUtils {
+class ClienteServiceTest extends ServicesTestsUtils {
 
     ClienteService service;
 
@@ -29,15 +29,14 @@ public class ClienteServiceTest extends ServicesTestsUtils {
 
     @Test
     @DisplayName("Deve buscar um cliente por id")
-    public void buscarCategoriaPorId(){
+    void buscarCategoriaPorId(){
         Cliente cliente = new Cliente(1, "Pedro Silva", "pedro@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
 
         Mockito.when(this.repository.findById(cliente.getId())).thenReturn(Optional.of(cliente));
 
         Optional<Cliente> clienteRetornada = this.service.findById(cliente.getId());
 
-        assertThat(clienteRetornada.isPresent()).isTrue();
-        assertThat(clienteRetornada.get()).isEqualTo(cliente);
+        assertThat(clienteRetornada).isPresent().contains(cliente);
     }
 
 }

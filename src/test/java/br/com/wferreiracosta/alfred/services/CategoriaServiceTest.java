@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CategoriaServiceTest extends ServicesTestsUtils {
+class CategoriaServiceTest extends ServicesTestsUtils {
 
     CategoriaService service;
 
@@ -28,21 +28,21 @@ public class CategoriaServiceTest extends ServicesTestsUtils {
 
     @Test
     @DisplayName("Deve buscar uma categoria por id")
-    public void buscarCategoriaPorId(){
+    void buscarCategoriaPorId(){
         Categoria categoria = Categoria.builder().id(1).nome("Informatica").build();
 
         Mockito.when(this.categoriaRepository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
 
         Optional<Categoria> categoriaRetornada = this.service.findById(categoria.getId());
 
-        assertThat(categoriaRetornada.isPresent()).isTrue();
+        assertThat(categoriaRetornada).isPresent();
         assertThat(categoriaRetornada.get().getId()).isEqualTo(categoria.getId());
         assertThat(categoriaRetornada.get().getNome()).isEqualTo(categoria.getNome());
     }
 
     @Test
     @DisplayName("Deve salvar uma categoria no banco de dados")
-    public void deveSalvarUmaCategoria(){
+    void deveSalvarUmaCategoria(){
         Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
         Categoria categoriaSalva = Categoria.builder().id(1).nome("Informatica").build();
 

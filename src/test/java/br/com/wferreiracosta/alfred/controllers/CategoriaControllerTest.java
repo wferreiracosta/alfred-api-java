@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Optional;
 
 @WebMvcTest(controllers = CategoriaController.class)
-public class CategoriaControllerTest extends ControllersTestsUtils {
+class CategoriaControllerTest extends ControllersTestsUtils {
 
     static String CATEGORIA_API = "/categorias";
 
@@ -39,7 +39,7 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar uma categoria existente e retornar ela")
-    public void deveBuscarERetornarUmaCategoriaExistente() throws Exception {
+    void deveBuscarERetornarUmaCategoriaExistente() throws Exception {
         Categoria categoria = Categoria.builder().id(1).nome("Informatica").build();
 
         BDDMockito.given(this.service.findById(categoria.getId()))
@@ -60,7 +60,7 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar uma categoria que não existe e retornar o status not_found")
-    public void deveBuscarUmaCategoriaQueNaoExistente() throws Exception {
+    void deveBuscarUmaCategoriaQueNaoExistente() throws Exception {
         Integer id = 1;
         String msg = "Objeto não encontrado! Id: " + id;
 
@@ -78,7 +78,7 @@ public class CategoriaControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve salvar uma categoria no banco de dados")
-    public void deveSalvarUmaCategoria() throws Exception {
+    void deveSalvarUmaCategoria() throws Exception {
         Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
 
         BDDMockito.given(this.service.save(categoria))

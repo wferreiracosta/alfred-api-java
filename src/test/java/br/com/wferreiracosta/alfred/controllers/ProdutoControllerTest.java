@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Optional;
 
 @WebMvcTest(controllers = ProdutoController.class)
-public class ProdutoControllerTest extends ControllersTestsUtils {
+class ProdutoControllerTest extends ControllersTestsUtils {
 
     final String PRODUTO_API = "/produtos";
 
@@ -30,7 +30,7 @@ public class ProdutoControllerTest extends ControllersTestsUtils {
 
     @Test
     @DisplayName("Deve buscar um produto existente por id e retornar ele")
-    public void deveBuscarProdutoPorId() throws Exception {
+    void deveBuscarProdutoPorId() throws Exception {
         Produto produto = new Produto(1, "Celular", 1.000);
 
         BDDMockito.given(this.produtoService.findById(produto.getId()))

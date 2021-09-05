@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EnderecoRepositoryTest extends RepositoriesTestsUtils {
+class EnderecoRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     TestEntityManager entityManager;
@@ -23,7 +23,7 @@ public class EnderecoRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve salvar um Endereço")
-    public void salvarEndereco(){
+    void salvarEndereco(){
         Estado estado = new Estado(null, "Minas Gerais");
         Cidade cidade = new Cidade(null, "Uberlândia", estado);
         Cliente cliente = new Cliente(null, "Pedro Silva", "pedro@silva.com", "73094044085", TipoCliente.PESSOAFISICA);

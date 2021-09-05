@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PedidoServiceTest extends ServicesTestsUtils {
+class PedidoServiceTest extends ServicesTestsUtils {
 
     PedidoService service;
 
@@ -41,7 +41,7 @@ public class PedidoServiceTest extends ServicesTestsUtils {
 
     @Test
     @DisplayName("Deve salvar um pedido")
-    public void deveSalvarPedido(){
+    void deveSalvarPedido(){
         Pedido pedido = this.getPedidoComPagamentoComCartao();
         Pedido pedidoSalvo = this.getPedidoComPagamentoComCartao();
         pedidoSalvo.setId(1);

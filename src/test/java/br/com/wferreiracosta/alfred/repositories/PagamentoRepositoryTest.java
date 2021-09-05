@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PagamentoRepositoryTest extends RepositoriesTestsUtils {
+class PagamentoRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     TestEntityManager entityManager;
@@ -34,7 +34,7 @@ public class PagamentoRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve salvar um pagamento")
-    public void devSalvarPagamento(){
+    void devSalvarPagamento(){
         Pagamento pagamento = getPagamentoComCartao();
 
         Pagamento pagamentoSalva = this.pagamentoRepository.save(pagamento);

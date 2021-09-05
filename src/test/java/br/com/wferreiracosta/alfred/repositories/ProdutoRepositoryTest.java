@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProdutoRepositoryTest extends RepositoriesTestsUtils {
+class ProdutoRepositoryTest extends RepositoriesTestsUtils {
 
     @Autowired
     TestEntityManager entityManager;
@@ -21,7 +21,7 @@ public class ProdutoRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve obter um produto por id")
-    public void deveRetornaProduto() {
+    void deveRetornaProduto() {
         Produto produto = new Produto(null, "Celular", 1.000);
         Produto produtoSalvo = this.entityManager.persist(produto);
         Optional<Produto> produtoRetornado = this.produtoRepository.findById(produtoSalvo.getId());
@@ -30,7 +30,7 @@ public class ProdutoRepositoryTest extends RepositoriesTestsUtils {
 
     @Test
     @DisplayName("Deve salvar uma Produto")
-    public void deveSalvarProduto(){
+    void deveSalvarProduto(){
         Produto produto = new Produto(null, "Celular", 1.000);
         Produto produtoSalvo = this.produtoRepository.save(produto);
         assertThat(produtoSalvo.getId()).isNotNull();
