@@ -5,7 +5,11 @@ import br.com.wferreiracosta.alfred.models.Categoria;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @Slf4j
 @RestController
@@ -26,11 +30,20 @@ public class CategoriaController {
                 .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Categoria save(@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> save(@RequestBody Categoria categoria){
         log.info("[POST] Salvando Categoria: "+categoria);
-        return this.categoriaService.save(categoria);
+        Categoria categoriaSalva = this.categoriaService.save(categoria);
+        URI uri = getUri(categoriaSalva.getId());
+        return ResponseEntity.created(uri).body(categoriaSalva);
+    }
+
+    private URI getUri(Integer id) {
+        return ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
     }
 
 }
