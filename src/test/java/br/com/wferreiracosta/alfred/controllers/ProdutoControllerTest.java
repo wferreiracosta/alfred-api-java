@@ -3,7 +3,6 @@ package br.com.wferreiracosta.alfred.controllers;
 import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.services.ProdutoService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -29,18 +28,10 @@ public class ProdutoControllerTest extends ControllersTestsUtils {
     @MockBean
     ProdutoService produtoService;
 
-    public String asJsonString(Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Test
     @DisplayName("Deve buscar um produto existente por id e retornar ele")
     public void deveBuscarProdutoPorId() throws Exception {
-        Produto produto = Produto.builder().id(1).nome("Celular").preco(1.000).build();
+        Produto produto = new Produto(1, "Celular", 1.000);
 
         BDDMockito.given(this.produtoService.findById(produto.getId()))
                 .willReturn(Optional.of(produto));
@@ -58,4 +49,5 @@ public class ProdutoControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.jsonPath("nome").value(produto.getNome()))
                 .andExpect(MockMvcResultMatchers.jsonPath("preco").value(produto.getPreco()));
     }
+
 }

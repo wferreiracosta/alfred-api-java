@@ -29,13 +29,13 @@ public class ProdutoServiceTest  extends ServicesTestsUtils {
     @Test
     @DisplayName("Deve retorna um produto por id")
     public void deveRetornarProduto(){
-        Produto produto = Produto.builder().id(1).nome("Celular").preco(1.000).build();
+        Produto produto = new Produto(1, "Celular", 1.000);
 
         Mockito.when(this.produtoRepository.findById(produto.getId())).thenReturn(Optional.of(produto));
 
         Optional<Produto> produtoRetornado = this.produtoService.findById(produto.getId());
 
-        assertThat(produtoRetornado.isPresent()).isTrue();
+        assertThat(produtoRetornado).isPresent();
         assertThat(produtoRetornado.get().getId()).isEqualTo(produto.getId());
         assertThat(produtoRetornado.get().getNome()).isEqualTo(produto.getNome());
         assertThat(produtoRetornado.get().getPreco()).isEqualTo(produto.getPreco());

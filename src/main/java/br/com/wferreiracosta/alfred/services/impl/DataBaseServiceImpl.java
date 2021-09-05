@@ -5,6 +5,7 @@ import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.*;
 import br.com.wferreiracosta.alfred.services.DataBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,28 +14,24 @@ import java.util.Arrays;
 @Service
 public class DataBaseServiceImpl implements DataBaseService {
 
-    private final CategoriaRepository categoriaRepository;
-    private final ProdutoRepository produtoRepository;
-    private final CidadeRepository cidadeRepository;
-    private final EstadoRepository estadoRepository;
-    private final ClienteRepository clienteRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final PedidoRepository pedidoRepository;
-    private final PagamentoRepository pagamentoRepository;
-
-    public DataBaseServiceImpl(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository,
-                               CidadeRepository cidadeRepository, EstadoRepository estadoRepository,
-                               ClienteRepository clienteRepository, EnderecoRepository enderecoRepository,
-                               PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository) {
-        this.categoriaRepository = categoriaRepository;
-        this.produtoRepository = produtoRepository;
-        this.cidadeRepository = cidadeRepository;
-        this.estadoRepository = estadoRepository;
-        this.clienteRepository = clienteRepository;
-        this.enderecoRepository = enderecoRepository;
-        this.pedidoRepository = pedidoRepository;
-        this.pagamentoRepository = pagamentoRepository;
-    }
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    @Autowired
+    private CidadeRepository cidadeRepository;
+    @Autowired
+    private EstadoRepository estadoRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     public void instantiateTestDatabase() {
@@ -107,6 +104,19 @@ public class DataBaseServiceImpl implements DataBaseService {
 
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
+        ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+        ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+        ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+        ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+        ped2.getItens().addAll(Arrays.asList(ip3));
+
+        p1.getItens().addAll(Arrays.asList(ip1));
+        p2.getItens().addAll(Arrays.asList(ip3));
+        p3.getItens().addAll(Arrays.asList(ip2));
+
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 
     }
 

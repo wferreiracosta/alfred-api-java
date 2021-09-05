@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.services.ProdutoService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,9 @@ public class ProdutoController {
     }
 
     @GetMapping(value = "/{id}")
-    public Optional<Produto> findById(@PathVariable Integer id){
+    public Produto findById(@PathVariable Integer id){
         log.info("[GET] Fazendo a busca do produto com o id: {}", id);
-        return this.produtoService.findById(id);
+        return this.produtoService.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado! Id: " + id));
     }
 }

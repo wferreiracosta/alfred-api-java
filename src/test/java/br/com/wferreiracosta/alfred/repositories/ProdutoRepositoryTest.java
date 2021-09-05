@@ -22,16 +22,16 @@ public class ProdutoRepositoryTest extends RepositoriesTestsUtils {
     @Test
     @DisplayName("Deve obter um produto por id")
     public void deveRetornaProduto() {
-        Produto produto = Produto.builder().id(null).nome("Celular").preco(1.000).build();
+        Produto produto = new Produto(null, "Celular", 1.000);
         Produto produtoSalvo = this.entityManager.persist(produto);
         Optional<Produto> produtoRetornado = this.produtoRepository.findById(produtoSalvo.getId());
-        assertThat(produtoRetornado.isPresent()).isTrue();
+        assertThat(produtoRetornado).isPresent();
     }
 
     @Test
     @DisplayName("Deve salvar uma Produto")
     public void deveSalvarProduto(){
-        Produto produto = Produto.builder().id(null).nome("Celular").preco(1.000).build();
+        Produto produto = new Produto(null, "Celular", 1.000);
         Produto produtoSalvo = this.produtoRepository.save(produto);
         assertThat(produtoSalvo.getId()).isNotNull();
         assertThat(produtoSalvo.getId()).isEqualTo(produto.getId());
