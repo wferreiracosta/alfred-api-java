@@ -92,7 +92,7 @@ class CategoriaControllerTest extends ControllersTestsUtils {
 
         this.mvc
                 .perform(request)
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoria.getNome()));
