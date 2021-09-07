@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.wferreiracosta</groupId>
 	<artifactId>alfred</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>alfred</name>
 	<description>API de e-commerce feito com Spring Boot com as principais atividades de uma loja.</description>
 	<properties>
