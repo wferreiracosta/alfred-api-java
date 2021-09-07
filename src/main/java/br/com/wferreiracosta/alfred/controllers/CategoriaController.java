@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -50,9 +51,9 @@ public class CategoriaController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public Optional<Categoria> delete(@PathVariable Integer id) {
         log.info("[DELETE] Apagando Categoria por id: ID = "+id);
-        this.categoriaService.delete(id);
+        return this.categoriaService.delete(id);
     }
 
     private URI getUri(Integer id) {

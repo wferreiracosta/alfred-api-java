@@ -13,6 +13,6 @@ public interface CategoriaService {
 
     public CategoriaDTO update(CategoriaDTO categoriaDTO);
 
-    public void delete(Integer id);
+    public Optional<Categoria> delete(Integer id);
 
 }

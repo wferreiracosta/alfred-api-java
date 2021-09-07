@@ -1,6 +1,8 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.exception.DataIntegrityException;
 import br.com.wferreiracosta.alfred.models.Categoria;
+import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @WebMvcTest(controllers = CategoriaController.class)
@@ -138,6 +141,25 @@ class CategoriaControllerTest extends ControllersTestsUtils {
         this.mvc
                 .perform(request)
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve apagar uma categoria")
+    void deveRetornarErroQuandoTentarApagarCategoriaComProduto() throws Exception {
+        BDDMockito
+                .given(this.service.delete(1))
+                .willThrow(new DataIntegrityException("Não é possivel apagar categoria que possui produtos"));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(CATEGORIA_API.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("status").value("400"))
+                .andExpect(MockMvcResultMatchers.jsonPath("msg").value("Não é possivel apagar categoria que possui produtos"));
     }
 
 }

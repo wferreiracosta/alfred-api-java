@@ -38,12 +38,13 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public Optional<Categoria> delete(Integer id) {
         Optional<Categoria> categoriaOptional = this.findById(id);
         try {
             categoriaOptional.ifPresent(this.categoriaRepository::delete);
+            return categoriaOptional;
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivel excluir categoria que possui produtos");
+            throw new DataIntegrityException("Não é possivel apagar categoria que possui produtos");
         }
     }
 
