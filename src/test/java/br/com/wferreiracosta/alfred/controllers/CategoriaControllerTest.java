@@ -1,6 +1,7 @@
 package br.com.wferreiracosta.alfred.controllers;
 
 import br.com.wferreiracosta.alfred.models.Categoria;
+import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,5 +97,28 @@ class CategoriaControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoria.getNome()));
+    }
+
+    @Test
+    @DisplayName("Deve alterar uma categoria no banco de dados")
+    void deveAlterarUmaCategoria() throws Exception {
+        CategoriaDTO categoriaNew = CategoriaDTO.builder().nome("Tecnologia").build();
+        CategoriaDTO categoria = CategoriaDTO.builder().id(1).nome("Tecnologia").build();
+
+        BDDMockito.given(this.service.update(categoria))
+                .willReturn(categoria);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(CATEGORIA_API.concat("/"+categoria.getId()))
+                .content(asJsonString(categoriaNew))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("id").value(categoria.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoriaNew.getNome()));
     }
 }

@@ -2,6 +2,7 @@ package br.com.wferreiracosta.alfred.controllers;
 
 import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Categoria;
+import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @Slf4j
@@ -36,6 +38,14 @@ public class CategoriaController {
         Categoria categoriaSalva = this.categoriaService.save(categoria);
         URI uri = getUri(categoriaSalva.getId());
         return ResponseEntity.created(uri).body(categoriaSalva);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping(value = "/{id}")
+    public CategoriaDTO update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
+        log.info("[PUT] Alterando Categoria por id: ID = "+id);
+        objDto.setId(id);
+        return this.categoriaService.update(objDto);
     }
 
     private URI getUri(Integer id) {

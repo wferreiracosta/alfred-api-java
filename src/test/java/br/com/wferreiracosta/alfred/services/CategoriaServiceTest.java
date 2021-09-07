@@ -1,6 +1,7 @@
 package br.com.wferreiracosta.alfred.services;
 
 import br.com.wferreiracosta.alfred.models.Categoria;
+import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.repositories.CategoriaRepository;
 import br.com.wferreiracosta.alfred.services.impl.CategoriaServiceImpl;
 import br.com.wferreiracosta.alfred.utils.ServicesTestsUtils;
@@ -52,6 +53,22 @@ class CategoriaServiceTest extends ServicesTestsUtils {
 
         assertThat(categoriaRetornada.getId()).isEqualTo(categoriaSalva.getId());
         assertThat(categoriaRetornada.getNome()).isEqualTo(categoriaSalva.getNome());
+    }
+
+    @Test
+    @DisplayName("Deve alterar categoria")
+    void deveAlterarCategoria(){
+        Categoria categoriaOld = Categoria.builder().id(1).nome("Informatica").build();
+        Categoria categoria = Categoria.builder().id(1).nome("Tecnologia").build();
+        CategoriaDTO categoriaNew = CategoriaDTO.builder().id(1).nome("Tecnologia").build();
+
+        Mockito.when(this.categoriaRepository.findById(categoriaOld.getId())).thenReturn(Optional.of(categoriaOld));
+        Mockito.when(this.categoriaRepository.save(categoria)).thenReturn(categoria);
+
+        CategoriaDTO categoriaUpdate = this.service.update(categoriaNew);
+
+        assertThat(categoriaUpdate.getId()).isEqualTo(categoriaNew.getId());
+        assertThat(categoriaUpdate.getNome()).isEqualTo(categoriaNew.getNome());
     }
 
 }
