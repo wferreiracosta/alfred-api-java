@@ -48,6 +48,13 @@ public class CategoriaController {
         return this.categoriaService.update(objDto);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        log.info("[DELETE] Apagando Categoria por id: ID = "+id);
+        this.categoriaService.delete(id);
+    }
+
     private URI getUri(Integer id) {
         return ServletUriComponentsBuilder
                 .fromCurrentRequest()

@@ -121,4 +121,23 @@ class CategoriaControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(categoria.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("nome").value(categoriaNew.getNome()));
     }
+
+    @Test
+    @DisplayName("Deve apagar uma categoria")
+    void deveApagarCategoria() throws Exception {
+        Categoria categoria = Categoria.builder().id(1).nome("Informatica").build();
+
+        BDDMockito.given(this.service.findById(categoria.getId()))
+                .willReturn(Optional.of(categoria));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(CATEGORIA_API.concat("/"+categoria.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
 }

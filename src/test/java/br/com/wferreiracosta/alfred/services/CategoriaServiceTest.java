@@ -71,4 +71,15 @@ class CategoriaServiceTest extends ServicesTestsUtils {
         assertThat(categoriaUpdate.getNome()).isEqualTo(categoriaNew.getNome());
     }
 
+    @Test
+    @DisplayName("Deve apagar categoria")
+    void deveApagarCategoria(){
+        Categoria categoria = Categoria.builder().id(1).nome("Informatica").build();
+
+        this.service.delete(categoria.getId());
+        Optional<Categoria> categoriaOptional = this.service.findById(categoria.getId());
+
+        assertThat(categoriaOptional).isEmpty();
+    }
+
 }

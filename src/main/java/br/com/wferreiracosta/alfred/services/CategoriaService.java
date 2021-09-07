@@ -12,4 +12,7 @@ public interface CategoriaService {
     public Categoria save(Categoria categoria);
 
     public CategoriaDTO update(CategoriaDTO categoriaDTO);
+
+    public void delete(Integer id);
+
 }

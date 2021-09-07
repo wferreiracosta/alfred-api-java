@@ -1,9 +1,11 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
+import br.com.wferreiracosta.alfred.exception.DataIntegrityException;
 import br.com.wferreiracosta.alfred.models.Categoria;
 import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.repositories.CategoriaRepository;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,6 +35,16 @@ public class CategoriaServiceImpl implements CategoriaService {
         categoriaOld.setNome(categoriaDTO.getNome());
         Categoria categoria = this.categoriaRepository.save(categoriaOld);
         return CategoriaDTO.builder().id(categoria.getId()).nome(categoria.getNome()).build();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Optional<Categoria> categoriaOptional = this.findById(id);
+        try {
+            categoriaOptional.ifPresent(this.categoriaRepository::delete);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possivel excluir categoria que possui produtos");
+        }
     }
 
 }
