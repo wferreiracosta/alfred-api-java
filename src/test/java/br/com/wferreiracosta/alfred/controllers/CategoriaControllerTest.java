@@ -20,7 +20,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @WebMvcTest(controllers = CategoriaController.class)
 class CategoriaControllerTest extends ControllersTestsUtils {
@@ -144,7 +146,7 @@ class CategoriaControllerTest extends ControllersTestsUtils {
     }
 
     @Test
-    @DisplayName("Deve apagar uma categoria")
+    @DisplayName("Deve retornar erro quando tentar apagar categoria com produto")
     void deveRetornarErroQuandoTentarApagarCategoriaComProduto() throws Exception {
         BDDMockito
                 .given(this.service.delete(1))
@@ -160,6 +162,33 @@ class CategoriaControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("status").value("400"))
                 .andExpect(MockMvcResultMatchers.jsonPath("msg").value("Não é possivel apagar categoria que possui produtos"));
+    }
+
+    @Test
+    @DisplayName("Deve retornar todas as categorias")
+    void deveRetornarTodasAsCategorias() throws Exception {
+        Categoria cat1 = new Categoria(1, "Informática");
+        Categoria cat2 = new Categoria(2, "Escritório");
+
+        List<Categoria> categoriaList = List.of(cat1, cat2);
+        List<CategoriaDTO> categoriaDTOList = categoriaList
+                .stream()
+                .map(obj -> new CategoriaDTO(obj))
+                .collect(Collectors.toList());
+
+        BDDMockito
+                .given(this.service.findAll())
+                .willReturn(categoriaDTOList);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(CATEGORIA_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(this.asJsonString(categoriaDTOList)));
     }
 
 }

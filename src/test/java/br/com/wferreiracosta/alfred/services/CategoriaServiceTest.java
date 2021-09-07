@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,6 +81,23 @@ class CategoriaServiceTest extends ServicesTestsUtils {
         Optional<Categoria> categoriaOptional = this.service.findById(categoria.getId());
 
         assertThat(categoriaOptional).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Deve retornar todas as categorias")
+    void deveRetornarTodasAsCategorias(){
+        Categoria cat1 = new Categoria(1, "Informática");
+        Categoria cat2 = new Categoria(2, "Escritório");
+
+        List<Categoria> categoriaList = List.of(cat1,cat2);
+
+        Mockito.when(this.categoriaRepository.findAll()).thenReturn(categoriaList);
+
+        List<CategoriaDTO> categoriaDTOList = this.service.findAll();
+
+        assertThat(categoriaList.size()).isEqualTo(categoriaDTOList.size());
+        assertThat(categoriaList).contains(cat1);
+        assertThat(categoriaList).contains(cat2);
     }
 
 }

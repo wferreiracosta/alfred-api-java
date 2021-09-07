@@ -1,9 +1,7 @@
 package br.com.wferreiracosta.alfred.models.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import br.com.wferreiracosta.alfred.models.Categoria;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -11,6 +9,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class CategoriaDTO implements Serializable {
 
@@ -22,4 +22,8 @@ public class CategoriaDTO implements Serializable {
     @NotEmpty(message="Preenchimento obrigatório")
     private String nome;
 
+    public CategoriaDTO(Categoria categoria) {
+        this.id = categoria.getId();
+        this.nome = categoria.getNome();
+    }
 }

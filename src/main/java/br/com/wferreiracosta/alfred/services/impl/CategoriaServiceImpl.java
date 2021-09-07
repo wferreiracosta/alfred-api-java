@@ -8,7 +8,9 @@ import br.com.wferreiracosta.alfred.services.CategoriaService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -46,6 +48,15 @@ public class CategoriaServiceImpl implements CategoriaService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivel apagar categoria que possui produtos");
         }
+    }
+
+    @Override
+    public List<CategoriaDTO> findAll() {
+        List<Categoria> categoriaList = this.categoriaRepository.findAll();
+        return categoriaList
+                .stream()
+                .map(obj -> new CategoriaDTO(obj))
+                .collect(Collectors.toList());
     }
 
 }

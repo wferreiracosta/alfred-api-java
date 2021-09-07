@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -54,6 +55,13 @@ public class CategoriaController {
     public Optional<Categoria> delete(@PathVariable Integer id) {
         log.info("[DELETE] Apagando Categoria por id: ID = "+id);
         return this.categoriaService.delete(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<CategoriaDTO> findAll(){
+        log.info("[GET] Obtendo todas as categorias");
+        return this.categoriaService.findAll();
     }
 
     private URI getUri(Integer id) {
