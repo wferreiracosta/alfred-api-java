@@ -55,7 +55,7 @@ class CategoriaServiceTest extends ServicesTestsUtils {
 
         Mockito.when(this.categoriaRepository.save(categoria)).thenReturn(categoriaSalva);
 
-        Categoria categoriaRetornada = this.service.save(categoria);
+        CategoriaDTO categoriaRetornada = this.service.save(new CategoriaDTO(categoria));
 
         assertThat(categoriaRetornada.getId()).isEqualTo(categoriaSalva.getId());
         assertThat(categoriaRetornada.getNome()).isEqualTo(categoriaSalva.getNome());

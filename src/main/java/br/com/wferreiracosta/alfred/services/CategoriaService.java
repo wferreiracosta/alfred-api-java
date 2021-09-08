@@ -11,7 +11,7 @@ public interface CategoriaService {
 
     public Optional<Categoria> findById(Integer id);
 
-    public Categoria save(Categoria categoria);
+    public CategoriaDTO save(CategoriaDTO categoriaDTO);
 
     public CategoriaDTO update(CategoriaDTO categoriaDTO);
 

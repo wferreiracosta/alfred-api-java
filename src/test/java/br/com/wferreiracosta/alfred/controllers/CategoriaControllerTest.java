@@ -89,10 +89,11 @@ class CategoriaControllerTest extends ControllersTestsUtils {
     @Test
     @DisplayName("Deve salvar uma categoria no banco de dados")
     void deveSalvarUmaCategoria() throws Exception {
-        Categoria categoria = Categoria.builder().id(null).nome("Informatica").build();
+        CategoriaDTO categoria = new CategoriaDTO(null,"Informatica");
+        CategoriaDTO categoriaRetorno = new CategoriaDTO(1,"Informatica");
 
         BDDMockito.given(this.service.save(categoria))
-                .willReturn(Categoria.builder().id(1).nome("Informatica").build());
+                .willReturn(categoriaRetorno);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(CATEGORIA_API)

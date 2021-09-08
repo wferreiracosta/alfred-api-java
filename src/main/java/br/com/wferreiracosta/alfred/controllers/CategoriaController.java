@@ -44,9 +44,9 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> save(@RequestBody Categoria categoria){
-        log.info("[POST] Salvando Categoria: "+categoria);
-        Categoria categoriaSalva = this.categoriaService.save(categoria);
+    public ResponseEntity<CategoriaDTO> save(@Valid @RequestBody CategoriaDTO categoriaDTO){
+        log.info("[POST] Salvando Categoria: "+categoriaDTO);
+        CategoriaDTO categoriaSalva = this.categoriaService.save(categoriaDTO);
         URI uri = getUri(categoriaSalva.getId());
         return ResponseEntity.created(uri).body(categoriaSalva);
     }

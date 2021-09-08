@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
+import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -36,5 +37,10 @@ public class Categoria implements Serializable {
     public Categoria(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public Categoria(CategoriaDTO categoriaDTO) {
+        this.id = categoriaDTO.getId();
+        this.nome = categoriaDTO.getNome();
     }
 }
