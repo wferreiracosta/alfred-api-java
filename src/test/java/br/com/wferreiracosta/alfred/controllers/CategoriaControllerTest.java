@@ -13,6 +13,10 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -189,6 +193,45 @@ class CategoriaControllerTest extends ControllersTestsUtils {
                 .perform(request)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(this.asJsonString(categoriaDTOList)));
+    }
+
+    @Test
+    @DisplayName("Deve buscar todas as categorias de forma paginada")
+    void deveBuscarTodasAsCategoriasDeFormaPaginada() throws Exception {
+        CategoriaDTO cat1 = CategoriaDTO.builder().id(1).nome("Informática").build();
+        CategoriaDTO cat2 = CategoriaDTO.builder().id(2).nome("Escritório").build();
+        CategoriaDTO cat3 = CategoriaDTO.builder().id(3).nome("Cama mesa e banho").build();
+        CategoriaDTO cat4 = CategoriaDTO.builder().id(4).nome("Eletrônicos").build();
+
+        List<CategoriaDTO> categoriaDTOList = List.of(cat1, cat2, cat3, cat4);
+        Page<CategoriaDTO> categoriaDTOPage = new PageImpl<>(categoriaDTOList);
+
+        Integer page = 0;
+        Integer linesPerPage = 2;
+        String orderBy = "id";
+        String direction = "DESC";
+
+        BDDMockito
+                .given(this.service.findAllWithPagination(page, linesPerPage, orderBy, direction))
+                .willReturn(categoriaDTOPage);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(CATEGORIA_API.concat("/page"))
+                .param("page", String.valueOf(page))
+                .param("linesPerPage", String.valueOf(linesPerPage))
+                .param("orderBy", orderBy)
+                .param("direction", direction)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("totalElements").value("4"))
+                .andExpect(MockMvcResultMatchers.jsonPath("totalPages").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("first").value("true"))
+                .andExpect(MockMvcResultMatchers.jsonPath("numberOfElements").value("4"))
+                .andExpect(MockMvcResultMatchers.jsonPath("empty").value("false"));
     }
 
 }

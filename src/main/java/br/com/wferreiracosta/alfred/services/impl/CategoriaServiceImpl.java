@@ -6,6 +6,9 @@ import br.com.wferreiracosta.alfred.models.dto.CategoriaDTO;
 import br.com.wferreiracosta.alfred.repositories.CategoriaRepository;
 import br.com.wferreiracosta.alfred.services.CategoriaService;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +60,13 @@ public class CategoriaServiceImpl implements CategoriaService {
                 .stream()
                 .map(obj -> new CategoriaDTO(obj))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CategoriaDTO> findAllWithPagination(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return this.categoriaRepository.findAll(pageRequest)
+                .map(obj -> new CategoriaDTO(obj));
     }
 
 }

@@ -10,9 +10,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -98,6 +103,32 @@ class CategoriaServiceTest extends ServicesTestsUtils {
         assertThat(categoriaList.size()).isEqualTo(categoriaDTOList.size());
         assertThat(categoriaList).contains(cat1);
         assertThat(categoriaList).contains(cat2);
+    }
+
+    @Test
+    @DisplayName("Deve buscar todas as categorias de forma paginada")
+    void deveBuscarTodasAsCategoriasDeFormaPaginada(){
+        Categoria cat1 = new Categoria(1, "Informática");
+        Categoria cat2 = new Categoria(2, "Escritório");
+
+        List<Categoria> categoriaList = List.of(cat1, cat2);
+
+        Page<Categoria> categoriaPage = new PageImpl<>(categoriaList);
+
+        Integer page = 0;
+        Integer linesPerPage = 2;
+        String orderBy = "id";
+        String direction = "DESC";
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        Mockito.when(this.categoriaRepository.findAll(pageRequest))
+                .thenReturn(categoriaPage);
+
+        Page<CategoriaDTO> returnCategoriaDTOPage = this.service.findAllWithPagination(page, linesPerPage, orderBy, direction);
+
+        assertThat(returnCategoriaDTOPage.isFirst()).isTrue();
+        assertThat(returnCategoriaDTOPage.isEmpty()).isFalse();
+        assertThat(returnCategoriaDTOPage.getTotalElements()).isEqualTo(2);
     }
 
 }
