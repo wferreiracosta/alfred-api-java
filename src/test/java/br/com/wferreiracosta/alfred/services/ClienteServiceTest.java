@@ -1,6 +1,7 @@
 package br.com.wferreiracosta.alfred.services;
 
 import br.com.wferreiracosta.alfred.models.Cliente;
+import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.services.impl.ClienteServiceImpl;
@@ -37,6 +38,23 @@ class ClienteServiceTest extends ServicesTestsUtils {
         Optional<Cliente> clienteRetornada = this.service.findById(cliente.getId());
 
         assertThat(clienteRetornada).isPresent().contains(cliente);
+    }
+
+    @Test
+    @DisplayName("Deve Atualizar cliente")
+    void deveAtualizarCliente(){
+        Cliente cliente = new Cliente(1, "Andre Silva", "Andre@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
+        Cliente clienteNew = new Cliente(1, "Pedro Silva", "pedro@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
+        ClienteDTO clienteDTO = ClienteDTO.builder().id(1).nome("Pedro Silva").email("pedro@silva.com").build();
+
+        Mockito.when(this.repository.findById(clienteDTO.getId())).thenReturn(Optional.of(cliente));
+        Mockito.when(this.repository.save(clienteNew)).thenReturn(clienteNew);
+
+        Cliente clienteUpdate = this.service.update(clienteDTO);
+
+        assertThat(clienteUpdate.getId()).isEqualTo(clienteDTO.getId());
+        assertThat(clienteUpdate.getNome()).isEqualTo(clienteDTO.getNome());
+        assertThat(clienteUpdate.getEmail()).isEqualTo(clienteDTO.getEmail());
     }
 
 }

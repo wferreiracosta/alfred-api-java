@@ -2,12 +2,17 @@ package br.com.wferreiracosta.alfred.controllers;
 
 import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Cliente;
+import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,6 +30,13 @@ public class ClienteController {
         log.info("[GET] Obtendo Cliente por id: ID = "+id);
         return this.clienteService.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado! Id: " + id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
+        objDto.setId(id);
+        clienteService.update(objDto);
+        return ResponseEntity.noContent().build();
     }
 
 }
