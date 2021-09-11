@@ -82,10 +82,12 @@ class CategoriaServiceTest extends ServicesTestsUtils {
     void deveApagarCategoria(){
         Categoria categoria = Categoria.builder().id(1).nome("Informatica").build();
 
+        Mockito.when(this.categoriaRepository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
         this.service.delete(categoria.getId());
         Optional<Categoria> categoriaOptional = this.service.findById(categoria.getId());
 
-        assertThat(categoriaOptional).isEmpty();
+        assertThat(categoriaOptional.get().getId()).isEqualTo(categoria.getId());
+        assertThat(categoriaOptional.get().getNome()).isEqualTo(categoria.getNome());
     }
 
     @Test

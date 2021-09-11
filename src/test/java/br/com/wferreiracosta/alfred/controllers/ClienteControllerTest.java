@@ -90,4 +90,22 @@ class ClienteControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.jsonPath("msg").value(msg));
     }
 
+    @Test
+    @DisplayName("Deve apagar cliente da base")
+    void deveApagarUmClienteDaBase() throws Exception {
+        Cliente cliente = getCliente();
+
+        BDDMockito.given(this.service.delete(cliente.getId()))
+                .willReturn(Optional.of(cliente));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(CLIENTE_API.concat("/"+cliente.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
 }

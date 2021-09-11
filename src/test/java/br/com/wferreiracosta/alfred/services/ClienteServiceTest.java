@@ -57,4 +57,18 @@ class ClienteServiceTest extends ServicesTestsUtils {
         assertThat(clienteUpdate.getEmail()).isEqualTo(clienteDTO.getEmail());
     }
 
+    @Test
+    @DisplayName("Deve apagar cliente da base")
+    void deveApagarClienteDaBase(){
+        Cliente cliente = new Cliente(1, "Andre Silva", "Andre@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
+
+        Mockito.when(this.repository.findById(cliente.getId())).thenReturn(Optional.of(cliente));
+        this.repository.deleteById(cliente.getId());
+        Optional<Cliente> clienteOptional = this.service.delete(cliente.getId());
+
+        assertThat(clienteOptional.get().getId()).isEqualTo(cliente.getId());
+        assertThat(clienteOptional.get().getNome()).isEqualTo(cliente.getNome());
+        assertThat(clienteOptional.get().getEmail()).isEqualTo(cliente.getEmail());
+    }
+
 }
