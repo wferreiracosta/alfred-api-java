@@ -5,15 +5,10 @@ import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.List;
 
 @Slf4j
 @RestController
