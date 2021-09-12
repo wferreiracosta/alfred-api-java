@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.models.dto;
 
+import br.com.wferreiracosta.alfred.validation.ClienteInsert;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @EqualsAndHashCode
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +37,9 @@ public class ClienteNewDTO implements Serializable {
 
     @NotEmpty(message = "Preenchimento obrigatório!!!")
     private String numero;
+
     private String complemento;
+
     private String bairro;
 
     @NotEmpty(message = "Preenchimento obrigatório!!!")
@@ -47,5 +51,6 @@ public class ClienteNewDTO implements Serializable {
     private String telefone1;
 
     private String telefone2;
+
     private String telefone3;
 }
