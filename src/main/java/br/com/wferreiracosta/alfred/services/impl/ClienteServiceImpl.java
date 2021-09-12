@@ -1,12 +1,17 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
 import br.com.wferreiracosta.alfred.exception.DataIntegrityException;
+import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
+import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
+import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
+import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -41,6 +46,31 @@ public class ClienteServiceImpl implements ClienteService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivel apagar cliente que possui pedidos");
         }
+    }
+
+    @Transactional
+    @Override
+    public Cliente insert(ClienteNewDTO clienteNewDTO) {
+        Cliente cliente = this.fromDTO(clienteNewDTO);
+        cliente.setId(null);
+        return this.clienteRepository.save(cliente);
+    }
+
+    public Cliente fromDTO(ClienteNewDTO objNewDTO) {
+        Cliente cliente = new Cliente(null, objNewDTO.getNome(), objNewDTO.getEmail(), objNewDTO.getCpfOuCnpj(),
+                TipoCliente.toEnum(objNewDTO.getTipo()));
+        Cidade cidade = new Cidade(objNewDTO.getCidadeId(), null, null);
+        Endereco endereco = new Endereco(null, objNewDTO.getLogradouro(), objNewDTO.getNumero(),
+                objNewDTO.getComplemento(), objNewDTO.getBairro(), objNewDTO.getCep(), cliente, cidade);
+        cliente.getEnderecos().add(endereco);
+        cliente.getTelefones().add(objNewDTO.getTelefone1());
+        if (objNewDTO.getTelefone2() != null) {
+            cliente.getTelefones().add(objNewDTO.getTelefone2());
+        }
+        if (objNewDTO.getTelefone3() != null) {
+            cliente.getTelefones().add(objNewDTO.getTelefone3());
+        }
+        return cliente;
     }
 
 }

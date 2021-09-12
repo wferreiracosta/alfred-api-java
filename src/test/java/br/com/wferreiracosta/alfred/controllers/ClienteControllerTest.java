@@ -4,6 +4,7 @@ import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.Estado;
+import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
@@ -50,6 +51,21 @@ class ClienteControllerTest extends ControllersTestsUtils {
         Endereco endereco = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cliente, cidade);
         cliente.getEnderecos().addAll(Arrays.asList(endereco));
         return cliente;
+    }
+
+    private ClienteNewDTO getClienteNewDTO() {
+        return ClienteNewDTO.builder()
+                .nome("Thiago Almeida")
+                .email("thiago@almeida.com")
+                .cpfOuCnpj("79763852000190")
+                .logradouro("Rua")
+                .numero("100")
+                .complemento("Predio")
+                .bairro("Parque")
+                .cep("00124578")
+                .cidadeId(1)
+                .telefone1("124578453")
+                .build();
     }
 
     @Test
@@ -106,6 +122,25 @@ class ClienteControllerTest extends ControllersTestsUtils {
         this.mvc
                 .perform(request)
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve inserir novo cliente na base")
+    void deveInserirNovoCliente() throws Exception {
+        Cliente cliente = getCliente();
+        ClienteNewDTO clienteNewDTO = getClienteNewDTO();
+
+        BDDMockito.given(this.service.insert(clienteNewDTO))
+                .willReturn(cliente);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(CLIENTE_API)
+                .content(asJsonString(clienteNewDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc.perform(request)
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
 }
