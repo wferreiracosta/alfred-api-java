@@ -1,9 +1,12 @@
 package br.com.wferreiracosta.alfred.validation;
 
 import br.com.wferreiracosta.alfred.exception.FieldMessage;
+import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.validation.utils.BR;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -11,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @Override
     public void initialize(ClienteInsert constraintAnnotation) {
@@ -31,6 +37,12 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
             if (clienteNewDTO.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(clienteNewDTO.getCpfOuCnpj())) {
                 list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido!"));
             }
+        }
+
+        Cliente cliente = clienteRepository.findByEmail(clienteNewDTO.getEmail());
+
+        if(cliente != null) {
+            list.add(new FieldMessage("email","O e-mail informado já existe!"));
         }
 
         for (FieldMessage e : list) {
