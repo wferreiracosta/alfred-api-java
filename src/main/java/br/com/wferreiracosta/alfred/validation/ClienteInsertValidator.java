@@ -5,6 +5,7 @@ import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
+import br.com.wferreiracosta.alfred.validation.annotation.ClienteInsert;
 import br.com.wferreiracosta.alfred.validation.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
 

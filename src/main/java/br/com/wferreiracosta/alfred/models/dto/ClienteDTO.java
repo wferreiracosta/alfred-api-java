@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.models.dto;
 
+import br.com.wferreiracosta.alfred.validation.annotation.ClienteUpdate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

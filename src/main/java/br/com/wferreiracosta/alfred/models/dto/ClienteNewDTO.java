@@ -1,6 +1,6 @@
 package br.com.wferreiracosta.alfred.models.dto;
 
-import br.com.wferreiracosta.alfred.validation.ClienteInsert;
+import br.com.wferreiracosta.alfred.validation.annotation.ClienteInsert;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
