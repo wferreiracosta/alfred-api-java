@@ -1,6 +1,7 @@
 package br.com.wferreiracosta.alfred.services;
 
 import br.com.wferreiracosta.alfred.models.Produto;
+import br.com.wferreiracosta.alfred.repositories.CategoriaRepository;
 import br.com.wferreiracosta.alfred.repositories.ProdutoRepository;
 import br.com.wferreiracosta.alfred.services.impl.ProdutoServiceImpl;
 import br.com.wferreiracosta.alfred.utils.ServicesTestsUtils;
@@ -21,9 +22,12 @@ class ProdutoServiceTest  extends ServicesTestsUtils {
     @MockBean
     ProdutoRepository produtoRepository;
 
+    @MockBean
+    CategoriaRepository categoriaRepository;
+
     @BeforeEach
     public void setUp(){
-        this.produtoService = new ProdutoServiceImpl(produtoRepository);
+        this.produtoService = new ProdutoServiceImpl(produtoRepository, categoriaRepository);
     }
 
     @Test
