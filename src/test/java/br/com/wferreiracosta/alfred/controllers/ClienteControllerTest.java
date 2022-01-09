@@ -124,23 +124,4 @@ class ClienteControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
-    @Test
-    @DisplayName("Deve inserir novo cliente na base")
-    void deveInserirNovoCliente() throws Exception {
-        Cliente cliente = getCliente();
-        ClienteNewDTO clienteNewDTO = getClienteNewDTO();
-
-        BDDMockito.given(this.service.insert(clienteNewDTO))
-                .willReturn(cliente);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(CLIENTE_API)
-                .content(asJsonString(clienteNewDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON);
-
-        this.mvc.perform(request)
-                .andExpect(MockMvcResultMatchers.status().isCreated());
-    }
-
 }

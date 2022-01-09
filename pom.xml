@@ -95,6 +95,57 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<dependencies>
+					<dependency>
+						<groupId>me.fabriciorby</groupId>
+						<artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+						<version>0.1.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<reportFormat>plain</reportFormat>
+					<consoleOutputReporter>
+						<disable>true</disable>
+					</consoleOutputReporter>
+					<statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+					</statelessTestsetInfoReporter>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>br/com/wferreiracosta/alfred/config/**/*</exclude>
+						<exclude>br/com/wferreiracosta/alfred/models/**/*</exclude>
+						<exclude>br/com/wferreiracosta/alfred/exception/**/*</exclude>
+						<exclude>br/com/wferreiracosta/alfred/validation/**/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
 		</plugins>
 	</build>
 
