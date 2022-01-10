@@ -9,6 +9,7 @@ import br.com.wferreiracosta.alfred.repositories.ItemPedidoRepository;
 import br.com.wferreiracosta.alfred.repositories.PagamentoRepository;
 import br.com.wferreiracosta.alfred.repositories.PedidoRepository;
 import br.com.wferreiracosta.alfred.services.BoletoService;
+import br.com.wferreiracosta.alfred.services.EmailService;
 import br.com.wferreiracosta.alfred.services.PedidoService;
 import br.com.wferreiracosta.alfred.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class PedidoServiceImpl implements PedidoService {
     private ProdutoService produtoService;
     @Autowired
     private BoletoService boletoService;
+    @Autowired
+    private EmailService emailService;
 
     private final PedidoRepository pedidoRepository;
 
@@ -69,6 +72,7 @@ public class PedidoServiceImpl implements PedidoService {
             ip.setPedido(obj);
         }
         itemPedidoRepository.saveAll(obj.getItens());
+        emailService.sendOrderConfirmationEmail(obj);
         return obj;
     }
 

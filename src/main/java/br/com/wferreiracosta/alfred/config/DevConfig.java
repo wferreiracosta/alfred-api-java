@@ -1,6 +1,8 @@
 package br.com.wferreiracosta.alfred.config;
 
 import br.com.wferreiracosta.alfred.services.DataBaseService;
+import br.com.wferreiracosta.alfred.services.EmailService;
+import br.com.wferreiracosta.alfred.services.impl.MockEmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +26,11 @@ public class DevConfig {
         }
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService() {
+        return new MockEmailServiceImpl();
     }
 
 }
