@@ -8,5 +8,6 @@ public interface PedidoService {
 
     public Pedido save(Pedido pedido);
     public Optional<Pedido> findById(Integer id);
+    public Pedido insert(Pedido obj);
 
 }

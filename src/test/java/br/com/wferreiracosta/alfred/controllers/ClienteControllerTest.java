@@ -4,6 +4,7 @@ import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.Estado;
+import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
@@ -52,6 +53,21 @@ class ClienteControllerTest extends ControllersTestsUtils {
         return cliente;
     }
 
+    private ClienteNewDTO getClienteNewDTO() {
+        return ClienteNewDTO.builder()
+                .nome("Thiago Almeida")
+                .email("thiago@almeida.com")
+                .cpfOuCnpj("79763852000190")
+                .logradouro("Rua")
+                .numero("100")
+                .complemento("Predio")
+                .bairro("Parque")
+                .cep("00124578")
+                .cidadeId(1)
+                .telefone1("124578453")
+                .build();
+    }
+
     @Test
     @DisplayName("Deve buscar e retornar os dados de um cliente por id")
     void deveBuscarERetornarOsDadosDeUmClientePeloId() throws Exception {
@@ -88,6 +104,24 @@ class ClienteControllerTest extends ControllersTestsUtils {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("status").value("404"))
                 .andExpect(MockMvcResultMatchers.jsonPath("msg").value(msg));
+    }
+
+    @Test
+    @DisplayName("Deve apagar cliente da base")
+    void deveApagarUmClienteDaBase() throws Exception {
+        Cliente cliente = getCliente();
+
+        BDDMockito.given(this.service.delete(cliente.getId()))
+                .willReturn(Optional.of(cliente));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(CLIENTE_API.concat("/"+cliente.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mvc
+                .perform(request)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
 }
