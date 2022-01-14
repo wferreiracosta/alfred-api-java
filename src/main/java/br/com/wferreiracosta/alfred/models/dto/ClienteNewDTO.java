@@ -53,4 +53,8 @@ public class ClienteNewDTO implements Serializable {
     private String telefone2;
 
     private String telefone3;
+
+    @NotEmpty(message = "Preenchimento obrigatório!!!")
+    private String senha;
+
 }

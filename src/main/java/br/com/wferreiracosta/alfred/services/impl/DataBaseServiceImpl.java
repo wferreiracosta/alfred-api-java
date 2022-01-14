@@ -6,6 +6,7 @@ import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.*;
 import br.com.wferreiracosta.alfred.services.DataBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,8 @@ public class DataBaseServiceImpl implements DataBaseService {
     private PagamentoRepository pagamentoRepository;
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void instantiateTestDatabase() {
@@ -71,14 +74,37 @@ public class DataBaseServiceImpl implements DataBaseService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Pedro Silva", "pedro@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
-        Cliente cli2 = new Cliente(null, "Andre Santos", "andre@santos.com", "96345237000183", TipoCliente.PESSOAJURIDICA);
+        Cliente cli1 = new Cliente(null,
+                "Pedro Silva",
+                "pedro@silva.com",
+                "88486319080",
+                TipoCliente.PESSOAFISICA,
+                this.bCryptPasswordEncoder.encode("123456"));
+
+        Cliente cli2 = new Cliente(null,
+                "Andre Santos",
+                "andre@santos.com",
+                "96345237000183",
+                TipoCliente.PESSOAJURIDICA,
+                this.bCryptPasswordEncoder.encode("123456"));
 
         cli1.getTelefones().addAll(Arrays.asList("27363323"));
         cli2.getTelefones().addAll(Arrays.asList("93838393"));
 
-        Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
-        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli2, c2);
+        Endereco e1 = new Endereco(null,
+                "Rua Flores",
+                "300",
+                "Apto 303",
+                "Jardim",
+                "38220834",
+                cli1, c1);
+
+        Endereco e2 = new Endereco(null,
+                "Avenida Matos",
+                "105",
+                "Sala 800",
+                "Centro",
+                "38777012", cli2, c2);
 
         cli1.getEnderecos().addAll(Arrays.asList(e1));
         cli2.getEnderecos().addAll(Arrays.asList(e2));

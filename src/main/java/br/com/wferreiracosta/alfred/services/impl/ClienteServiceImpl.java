@@ -9,7 +9,9 @@ import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.services.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,9 @@ import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final ClienteRepository clienteRepository;
 
@@ -57,8 +62,14 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     public Cliente fromDTO(ClienteNewDTO objNewDTO) {
-        Cliente cliente = new Cliente(null, objNewDTO.getNome(), objNewDTO.getEmail(), objNewDTO.getCpfOuCnpj(),
-                TipoCliente.toEnum(objNewDTO.getTipo()));
+        Cliente cliente = Cliente.builder()
+                .nome(objNewDTO.getNome())
+                .email(objNewDTO.getEmail())
+                .cpfOuCnpj(objNewDTO.getCpfOuCnpj())
+                .tipo(TipoCliente.toEnum(objNewDTO.getTipo()).getCod())
+                .senha(this.bCryptPasswordEncoder.encode(objNewDTO.getSenha()))
+                .build();
+
         Cidade cidade = new Cidade(objNewDTO.getCidadeId(), null, null);
         Endereco endereco = new Endereco(null, objNewDTO.getLogradouro(), objNewDTO.getNumero(),
                 objNewDTO.getComplemento(), objNewDTO.getBairro(), objNewDTO.getCep(), cliente, cidade);
@@ -70,6 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
         if (objNewDTO.getTelefone3() != null) {
             cliente.getTelefones().add(objNewDTO.getTelefone3());
         }
+
         return cliente;
     }
 
