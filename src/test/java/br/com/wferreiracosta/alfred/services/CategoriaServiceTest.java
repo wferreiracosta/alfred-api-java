@@ -93,8 +93,8 @@ class CategoriaServiceTest extends ServicesTestsUtils {
     @Test
     @DisplayName("Deve retornar todas as categorias")
     void deveRetornarTodasAsCategorias(){
-        Categoria cat1 = new Categoria(1, "Informática");
-        Categoria cat2 = new Categoria(2, "Escritório");
+        Categoria cat1 = Categoria.builder().id(1).nome("Informática").build();
+        Categoria cat2 = Categoria.builder().id(2).nome("Escritório").build();
 
         List<Categoria> categoriaList = List.of(cat1,cat2);
 
@@ -110,8 +110,8 @@ class CategoriaServiceTest extends ServicesTestsUtils {
     @Test
     @DisplayName("Deve buscar todas as categorias de forma paginada")
     void deveBuscarTodasAsCategoriasDeFormaPaginada(){
-        Categoria cat1 = new Categoria(1, "Informática");
-        Categoria cat2 = new Categoria(2, "Escritório");
+        Categoria cat1 = Categoria.builder().id(1).nome("Informática").build();
+        Categoria cat2 = Categoria.builder().id(2).nome("Escritório").build();
 
         List<Categoria> categoriaList = List.of(cat1, cat2);
 

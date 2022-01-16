@@ -38,10 +38,10 @@ public class DataBaseServiceImpl implements DataBaseService {
 
     @Override
     public void instantiateTestDatabase() {
-        Categoria cat1 = new Categoria(null, "Informática");
-        Categoria cat2 = new Categoria(null, "Escritório");
-        Categoria cat3 = new Categoria(null, "Cama mesa e banho");
-        Categoria cat4 = new Categoria(null, "Eletrônicos");
+        Categoria cat1 = Categoria.builder().nome("Informática").build();
+        Categoria cat2 = Categoria.builder().nome("Escritório").build();
+        Categoria cat3 = Categoria.builder().nome("Cama mesa e banho").build();
+        Categoria cat4 = Categoria.builder().nome("Eletrônicos").build();
 
         Produto p1 = new Produto(null, "Computador", 2000.00);
         Produto p2 = new Produto(null, "Impressora", 800.00);
