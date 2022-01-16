@@ -1,10 +1,7 @@
 package br.com.wferreiracosta.alfred.models.dto;
 
 import br.com.wferreiracosta.alfred.validation.annotation.ClienteInsert;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -16,6 +13,8 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode
 @ClienteInsert
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

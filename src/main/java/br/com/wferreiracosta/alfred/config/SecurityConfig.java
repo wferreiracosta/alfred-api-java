@@ -28,6 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/h2-console/**"
     };
 
+    private static final String[] PUBLIC_MATCHERS_POST = {
+            "/clientes/**"
+    };
+
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/produtos/**",
             "/categorias/**"
@@ -42,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         if(!Arrays.asList(environment.getActiveProfiles()).contains("test")){
             httpSecurity.authorizeRequests()
+                    .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                     .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
                     .antMatchers(PUBLIC_MATCHERS).permitAll()
                     .anyRequest().authenticated();
