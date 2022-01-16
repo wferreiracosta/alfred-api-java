@@ -102,24 +102,4 @@ class ClienteServiceTest extends ServicesTestsUtils {
         assertThat(clienteOptional.get().getEmail()).isEqualTo(cliente.getEmail());
     }
 
-    @Test
-    @DisplayName("Deve inserir um cliente na base")
-    void deveInserirNovoCliente(){
-        Cliente cliente = this.getCliente();
-        cliente.setId(null);
-
-        ClienteNewDTO clienteNewDTO = this.getClienteNewDTO();
-
-        Cliente clienteReturn = this.getCliente();
-        clienteReturn.setId(1);
-
-        Mockito.when(this.repository.save(cliente)).thenReturn(clienteReturn);
-
-        Cliente clienteInsert = this.service.insert(clienteNewDTO);
-
-        assertThat(clienteInsert.getId()).isEqualTo(clienteReturn.getId());
-        assertThat(clienteInsert.getNome()).isEqualTo(clienteNewDTO.getNome());
-        assertThat(clienteInsert.getEmail()).isEqualTo(clienteNewDTO.getEmail());
-    }
-
 }
