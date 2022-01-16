@@ -34,6 +34,11 @@ public class Categoria implements Serializable {
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
+    public Categoria(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public Categoria(CategoriaDTO categoriaDTO) {
         this.id = categoriaDTO.getId();
         this.nome = categoriaDTO.getNome();

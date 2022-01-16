@@ -172,8 +172,8 @@ class CategoriaControllerTest extends ControllersTestsUtils {
     @Test
     @DisplayName("Deve retornar todas as categorias")
     void deveRetornarTodasAsCategorias() throws Exception {
-        Categoria cat1 = Categoria.builder().id(1).nome("Informática").build();
-        Categoria cat2 = Categoria.builder().id(2).nome("Escritório").build();
+        Categoria cat1 = new Categoria(1, "Informática");
+        Categoria cat2 = new Categoria(2, "Escritório");
 
         List<Categoria> categoriaList = List.of(cat1, cat2);
         List<CategoriaDTO> categoriaDTOList = categoriaList
