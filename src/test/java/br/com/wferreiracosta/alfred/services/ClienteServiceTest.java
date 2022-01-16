@@ -32,7 +32,7 @@ class ClienteServiceTest extends ServicesTestsUtils {
         Estado estado = new Estado(null, "São Paulo");
         Cidade cidade = new Cidade(null, "Uberlândia", estado);
         estado.getCidades().addAll(Arrays.asList(cidade));
-        Cliente cliente = new Cliente(1, "Pedro Silva", "pedro@silva.com", "88486319080", TipoCliente.PESSOAFISICA);
+        Cliente cliente = new Cliente(1, "Pedro Silva", "pedro@silva.com", "88486319080", TipoCliente.PESSOAFISICA, "123");
         Endereco endereco = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cliente, cidade);
         cliente.getEnderecos().addAll(Arrays.asList(endereco));
         return cliente;
@@ -117,9 +117,9 @@ class ClienteServiceTest extends ServicesTestsUtils {
 
         Cliente clienteInsert = this.service.insert(clienteNewDTO);
 
-        assertThat(clienteReturn.getId()).isEqualTo(clienteReturn.getId());
-        assertThat(clienteReturn.getNome()).isEqualTo(clienteNewDTO.getNome());
-        assertThat(clienteReturn.getEmail()).isEqualTo(clienteNewDTO.getEmail());
+        assertThat(clienteInsert.getId()).isEqualTo(clienteReturn.getId());
+        assertThat(clienteInsert.getNome()).isEqualTo(clienteNewDTO.getNome());
+        assertThat(clienteInsert.getEmail()).isEqualTo(clienteNewDTO.getEmail());
     }
 
 }

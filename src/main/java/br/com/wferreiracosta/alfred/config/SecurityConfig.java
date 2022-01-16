@@ -40,10 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors()
                 .and().csrf().disable();
 
-        httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().authenticated();
+        if(!Arrays.asList(environment.getActiveProfiles()).contains("test")){
+            httpSecurity.authorizeRequests()
+                    .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                    .antMatchers(PUBLIC_MATCHERS).permitAll()
+                    .anyRequest().authenticated();
+        }
 
         httpSecurity.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
