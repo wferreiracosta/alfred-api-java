@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -36,15 +37,18 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente update(ClienteDTO objDTO) {
-        Cliente newObj = this.findById(objDTO.getId()).get();
+        var newObj = this.findById(objDTO.getId()).get();
+
         newObj.setNome(objDTO.getNome());
         newObj.setEmail(objDTO.getEmail());
+
         return this.clienteRepository.save(newObj);
     }
 
     @Override
     public Optional<Cliente> delete(Integer id) {
-        Optional<Cliente> clienteOptional = this.findById(id);
+        var clienteOptional = this.findById(id);
+
         try {
             clienteOptional.ifPresent(this.clienteRepository::delete);
             return clienteOptional;
@@ -56,33 +60,41 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     @Override
     public Cliente insert(ClienteNewDTO clienteNewDTO) {
-        Cliente cliente = this.fromDTO(clienteNewDTO);
-        cliente.setId(null);
+        var cliente = this.fromDTO(clienteNewDTO);
         return this.clienteRepository.save(cliente);
     }
 
     public Cliente fromDTO(ClienteNewDTO objNewDTO) {
-        Cliente cliente = Cliente.builder()
-                .nome(objNewDTO.getNome())
-                .email(objNewDTO.getEmail())
-                .cpfOuCnpj(objNewDTO.getCpfOuCnpj())
-                .tipo(TipoCliente.toEnum(objNewDTO.getTipo()).getCod())
-                .senha(this.bCryptPasswordEncoder.encode(objNewDTO.getSenha()))
-                .build();
+        var cli = new Cliente(null,
+                objNewDTO.getNome(),
+                objNewDTO.getEmail(),
+                objNewDTO.getCpfOuCnpj(),
+                TipoCliente.toEnum(objNewDTO.getTipo()),
+                bCryptPasswordEncoder.encode(objNewDTO.getSenha())
+        );
 
-        Cidade cidade = new Cidade(objNewDTO.getCidadeId(), null, null);
-        Endereco endereco = new Endereco(null, objNewDTO.getLogradouro(), objNewDTO.getNumero(),
-                objNewDTO.getComplemento(), objNewDTO.getBairro(), objNewDTO.getCep(), cliente, cidade);
-        cliente.getEnderecos().add(endereco);
-        cliente.getTelefones().add(objNewDTO.getTelefone1());
-        if (objNewDTO.getTelefone2() != null) {
-            cliente.getTelefones().add(objNewDTO.getTelefone2());
-        }
-        if (objNewDTO.getTelefone3() != null) {
-            cliente.getTelefones().add(objNewDTO.getTelefone3());
-        }
+        var cid = new Cidade(objNewDTO.getCidadeId(), null, null);
 
-        return cliente;
+        var end = new Endereco(null,
+                objNewDTO.getLogradouro(),
+                objNewDTO.getNumero(),
+                objNewDTO.getComplemento(),
+                objNewDTO.getBairro(),
+                objNewDTO.getCep(),
+                cli,
+                cid
+        );
+
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objNewDTO.getTelefone1());
+
+        if (objNewDTO.getTelefone2()!=null) {
+            cli.getTelefones().add(objNewDTO.getTelefone2());
+        }
+        if (objNewDTO.getTelefone3()!=null) {
+            cli.getTelefones().add(objNewDTO.getTelefone3());
+        }
+        return cli;
     }
 
 }
