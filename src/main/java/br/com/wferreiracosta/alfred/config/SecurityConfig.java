@@ -25,7 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Environment environment;
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**"
+            "/h2-console/**",
+            "/swagger-ui.html"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
@@ -36,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/produtos/**",
             "/categorias/**"
     };
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+                "/swagger-ui.html", "/webjars/**");
+    }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
