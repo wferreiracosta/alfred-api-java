@@ -34,6 +34,7 @@ public class Pagamento implements Serializable {
     @MapsId
     private Pedido pedido;
 
+    // TODO Substituir o construtor por Builder
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         super();
         this.id = id;

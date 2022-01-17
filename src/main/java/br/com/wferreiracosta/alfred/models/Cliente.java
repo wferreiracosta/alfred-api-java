@@ -50,6 +50,7 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private String senha;
 
+    // TODO Substituir o construtor por Builder
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         this.id = id;
         this.nome = nome;
@@ -58,6 +59,7 @@ public class Cliente implements Serializable {
         this.tipo = tipo.getCod();
     }
 
+    // TODO Substituir o construtor por Builder
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
         this.id = id;
         this.nome = nome;

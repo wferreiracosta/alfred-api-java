@@ -19,6 +19,7 @@ public class PagamentoComCartao extends Pagamento {
 
     private Integer numeroDeParcelas;
 
+    // TODO Substituir o construtor por Builder
     public PagamentoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
         super(id, estado, pedido);
         this.numeroDeParcelas = numeroDeParcelas;

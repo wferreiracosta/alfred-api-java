@@ -33,6 +33,7 @@ public class PagamentoComBoleto extends Pagamento {
     @JsonFormat(pattern="dd//MM/yyyy HH:mm")
     private LocalDateTime dataPagamento;
 
+    // TODO Substituir o construtor por Builder
     public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, LocalDateTime dataVencimento,
                               LocalDateTime dataPagamento) {
         super(id, estado, pedido);

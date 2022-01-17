@@ -30,6 +30,7 @@ public class ItemPedido implements Serializable {
     private Integer quantidade;
     private Double preco;
 
+    // TODO Substituir o construtor por Builder
     public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
         super();
         this.id.setPedido(pedido);

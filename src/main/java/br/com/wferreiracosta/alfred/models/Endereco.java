@@ -37,6 +37,7 @@ public class Endereco implements Serializable {
     @JoinColumn(name="cidade_id")
     private Cidade cidade;
 
+    // TODO Substituir o construtor por Builder
     public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep, Cliente cliente, Cidade cidade) {
         this.id = id;
         this.logradouro = logradouro;

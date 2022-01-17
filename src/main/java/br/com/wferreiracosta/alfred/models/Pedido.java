@@ -50,6 +50,7 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
+    // TODO Substituir o construtor por Builder
     public Pedido(Integer id, LocalDateTime instante, Cliente cliente, Endereco enderecoEntrega) {
         this.id = id;
         this.instante = instante;

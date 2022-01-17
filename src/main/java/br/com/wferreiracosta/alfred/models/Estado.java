@@ -31,6 +31,7 @@ public class Estado implements Serializable {
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 
+    // TODO Substituir o construtor por Builder
     public Estado(Integer id, String nome) {
         this.id = id;
         this.nome = nome;

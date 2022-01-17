@@ -34,6 +34,7 @@ public class Categoria implements Serializable {
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
+    // TODO Substituir o construtor por Builder
     public Categoria(Integer id, String nome) {
         this.id = id;
         this.nome = nome;

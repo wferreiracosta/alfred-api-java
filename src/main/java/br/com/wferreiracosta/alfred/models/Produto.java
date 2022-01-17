@@ -45,6 +45,7 @@ public class Produto implements Serializable {
     @OneToMany(mappedBy = "id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
+    // TODO Substituir o construtor por Builder
     public Produto(Integer id, String nome, Double preco) {
         this.id = id;
         this.nome = nome;
