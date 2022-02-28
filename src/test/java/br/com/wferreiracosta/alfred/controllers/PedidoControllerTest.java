@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.controllers.impl.PedidoControllerImpl;
 import br.com.wferreiracosta.alfred.models.*;
 import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
 import br.com.wferreiracosta.alfred.models.enums.TipoCliente;

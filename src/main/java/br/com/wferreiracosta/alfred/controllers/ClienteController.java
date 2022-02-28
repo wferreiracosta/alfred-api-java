@@ -1,58 +1,29 @@
 package br.com.wferreiracosta.alfred.controllers;
 
-import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
-import br.com.wferreiracosta.alfred.services.ClienteService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
-@Slf4j
-@RestController
 @RequestMapping("/clientes")
-public class ClienteController {
-
-    private final ClienteService clienteService;
-
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+public interface ClienteController {
 
     @GetMapping("/{id}")
-    public Cliente findById(@PathVariable Integer id){
-        log.info("[GET] Obtendo Cliente por id: ID = "+id);
-        return this.clienteService.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado! Id: " + id));
-    }
+    public Cliente findById(@PathVariable Integer id);
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
-        log.info("[PUT] Atualizando Cliente por id: ID = "+id);
-        objDto.setId(id);
-        clienteService.update(objDto);
-    }
+    public void update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id);
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){
-        log.info("[DELETE] Apagando Cliente por id: ID = "+id);
-        this.clienteService.delete(id);
-    }
+    public void delete(@PathVariable Integer id);
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO){
-        Cliente cliente = clienteService.insert(clienteNewDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(cliente.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-    }
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO);
 
 }

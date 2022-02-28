@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.controllers.impl.ClienteControllerImpl;
 import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Endereco;

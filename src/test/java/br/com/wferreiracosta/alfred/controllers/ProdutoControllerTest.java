@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.controllers;
 
+import br.com.wferreiracosta.alfred.controllers.impl.ProdutoControllerImpl;
 import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.services.ProdutoService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
