@@ -1,6 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
-import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
+import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.*;
 

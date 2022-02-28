@@ -1,12 +1,11 @@
 package br.com.wferreiracosta.alfred.controllers;
 
-import br.com.wferreiracosta.alfred.controllers.impl.ClienteControllerImpl;
 import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.Estado;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.services.ClienteService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;

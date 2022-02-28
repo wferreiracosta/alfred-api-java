@@ -1,4 +1,4 @@
-package br.com.wferreiracosta.alfred.models.enums;
+package br.com.wferreiracosta.alfred.enums;
 
 import lombok.Getter;
 

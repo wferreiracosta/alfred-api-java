@@ -3,7 +3,7 @@ package br.com.wferreiracosta.alfred.services.impl;
 import br.com.wferreiracosta.alfred.models.ItemPedido;
 import br.com.wferreiracosta.alfred.models.PagamentoComBoleto;
 import br.com.wferreiracosta.alfred.models.Pedido;
-import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
+import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.repositories.ItemPedidoRepository;
 import br.com.wferreiracosta.alfred.repositories.PagamentoRepository;

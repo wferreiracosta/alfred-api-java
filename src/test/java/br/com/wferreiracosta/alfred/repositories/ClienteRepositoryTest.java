@@ -1,7 +1,7 @@
 package br.com.wferreiracosta.alfred.repositories;
 
 import br.com.wferreiracosta.alfred.models.Cliente;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.utils.RepositoriesTestsUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package br.com.wferreiracosta.alfred.services;
 
 import br.com.wferreiracosta.alfred.models.*;
-import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.PedidoRepository;
 import br.com.wferreiracosta.alfred.services.impl.PedidoServiceImpl;
 import br.com.wferreiracosta.alfred.utils.ServicesTestsUtils;

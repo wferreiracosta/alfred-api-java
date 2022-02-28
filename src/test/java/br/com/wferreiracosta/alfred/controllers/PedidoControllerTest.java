@@ -1,9 +1,8 @@
 package br.com.wferreiracosta.alfred.controllers;
 
-import br.com.wferreiracosta.alfred.controllers.impl.PedidoControllerImpl;
 import br.com.wferreiracosta.alfred.models.*;
-import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.services.PedidoService;
 import br.com.wferreiracosta.alfred.utils.ControllersTestsUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;

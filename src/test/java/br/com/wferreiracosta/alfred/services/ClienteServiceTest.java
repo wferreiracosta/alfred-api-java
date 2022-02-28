@@ -6,7 +6,7 @@ import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.Estado;
 import br.com.wferreiracosta.alfred.models.dto.ClienteDTO;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.services.impl.ClienteServiceImpl;
 import br.com.wferreiracosta.alfred.utils.ServicesTestsUtils;

@@ -4,7 +4,7 @@ import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Endereco;
 import br.com.wferreiracosta.alfred.models.Estado;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.utils.RepositoriesTestsUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

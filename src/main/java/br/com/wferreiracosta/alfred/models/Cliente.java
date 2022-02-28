@@ -1,6 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 

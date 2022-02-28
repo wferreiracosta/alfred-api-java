@@ -1,8 +1,8 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
 import br.com.wferreiracosta.alfred.models.*;
-import br.com.wferreiracosta.alfred.models.enums.EstadoPagamento;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.*;
 import br.com.wferreiracosta.alfred.services.DataBaseService;
 import org.springframework.beans.factory.annotation.Autowired;

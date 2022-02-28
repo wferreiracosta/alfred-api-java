@@ -3,7 +3,7 @@ package br.com.wferreiracosta.alfred.validation;
 import br.com.wferreiracosta.alfred.exception.FieldMessage;
 import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.dto.ClienteNewDTO;
-import br.com.wferreiracosta.alfred.models.enums.TipoCliente;
+import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import br.com.wferreiracosta.alfred.repositories.ClienteRepository;
 import br.com.wferreiracosta.alfred.validation.annotation.ClienteInsert;
 import br.com.wferreiracosta.alfred.utils.BR;
