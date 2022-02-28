@@ -1,7 +1,7 @@
 package br.com.wferreiracosta.alfred.controllers.impl;
 
 import br.com.wferreiracosta.alfred.controllers.ProdutoController;
-import br.com.wferreiracosta.alfred.controllers.utils.URL;
+import br.com.wferreiracosta.alfred.utils.URL;
 import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Produto;
 import br.com.wferreiracosta.alfred.models.dto.ProdutoDTO;

@@ -1,4 +1,4 @@
-package br.com.wferreiracosta.alfred.validation.utils;
+package br.com.wferreiracosta.alfred.utils;
 
 public class BR {
 
