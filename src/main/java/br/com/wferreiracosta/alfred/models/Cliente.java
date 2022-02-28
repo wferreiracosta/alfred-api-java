@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.models;
 
+import br.com.wferreiracosta.alfred.enums.Perfil;
 import br.com.wferreiracosta.alfred.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.Sets.newHashSet;
 
 @Getter
 @Setter
@@ -47,6 +51,10 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis = newHashSet();
+
     @JsonIgnore
     private String senha;
 
@@ -57,6 +65,7 @@ public class Cliente implements Serializable {
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod();
+        this.addPerfil(Perfil.CLIENTE);
     }
 
     // TODO Substituir o construtor por Builder
@@ -67,6 +76,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod();
         this.senha = senha;
+        this.addPerfil(Perfil.CLIENTE);
     }
 
     public TipoCliente getTipo(){
@@ -75,6 +85,16 @@ public class Cliente implements Serializable {
 
     public void setTipo(TipoCliente tipoCliente){
         this.tipo = tipoCliente.getCod();
+    }
+
+    public Set<Perfil> getPerfis(){
+        return perfis.stream()
+                .map(perfil -> Perfil.toEnum(perfil))
+                .collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil){
+        this.perfis.add(perfil.getCod());
     }
 
 }

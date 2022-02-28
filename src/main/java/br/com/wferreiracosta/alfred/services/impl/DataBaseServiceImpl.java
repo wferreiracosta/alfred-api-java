@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
+import br.com.wferreiracosta.alfred.enums.Perfil;
 import br.com.wferreiracosta.alfred.models.*;
 import br.com.wferreiracosta.alfred.enums.EstadoPagamento;
 import br.com.wferreiracosta.alfred.enums.TipoCliente;
@@ -87,6 +88,8 @@ public class DataBaseServiceImpl implements DataBaseService {
                 "96345237000183",
                 TipoCliente.PESSOAJURIDICA,
                 this.bCryptPasswordEncoder.encode("123456"));
+
+        cli1.addPerfil(Perfil.ADMIN);
 
         cli1.getTelefones().addAll(Arrays.asList("27363323"));
         cli2.getTelefones().addAll(Arrays.asList("93838393"));
