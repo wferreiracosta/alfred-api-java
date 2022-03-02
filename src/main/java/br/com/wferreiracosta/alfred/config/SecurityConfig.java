@@ -1,6 +1,7 @@
 package br.com.wferreiracosta.alfred.config;
 
 import br.com.wferreiracosta.alfred.config.security.JWTAuthenticationFilter;
+import br.com.wferreiracosta.alfred.config.security.JWTAuthorizationFilter;
 import br.com.wferreiracosta.alfred.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -69,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated();
 
             httpSecurity.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+            httpSecurity.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         }
 
         httpSecurity.sessionManagement()
