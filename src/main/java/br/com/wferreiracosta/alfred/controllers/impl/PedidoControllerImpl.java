@@ -5,6 +5,7 @@ import br.com.wferreiracosta.alfred.exception.ObjectNotFoundException;
 import br.com.wferreiracosta.alfred.models.Pedido;
 import br.com.wferreiracosta.alfred.services.PedidoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,13 @@ public class PedidoControllerImpl implements PedidoController {
         obj = this.pedidoService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @Override
+    public ResponseEntity<Page<Pedido>> findPage(Integer page, Integer linesPerPage,
+                                                 String orderBy, String direction) {
+        Page<Pedido> list = pedidoService.findPage(page, linesPerPage, orderBy, direction);
+        return ResponseEntity.ok().body(list);
     }
 
 }

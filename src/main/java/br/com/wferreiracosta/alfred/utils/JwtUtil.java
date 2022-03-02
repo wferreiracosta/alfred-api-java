@@ -1,6 +1,8 @@
 package br.com.wferreiracosta.alfred.utils;
 
+import br.com.wferreiracosta.alfred.exception.AuthorizationException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,11 +38,11 @@ public class JwtUtil {
 
     public boolean tokenValido(String token) {
         final var claims = getClaims(token);
-        if(!isNull(claims)){
-            final  var username = claims.getSubject();
+        if (!isNull(claims)) {
+            final var username = claims.getSubject();
             final var expirationDate = claims.getExpiration();
             final var now = new Date(System.currentTimeMillis());
-            if(!isNull(username) && !isNull(expirationDate) && now.before(expirationDate)){
+            if (!isNull(username) && !isNull(expirationDate) && now.before(expirationDate)) {
                 return true;
             }
         }
