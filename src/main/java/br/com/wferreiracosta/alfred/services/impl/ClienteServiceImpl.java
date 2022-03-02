@@ -1,5 +1,7 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
+import br.com.wferreiracosta.alfred.enums.Perfil;
+import br.com.wferreiracosta.alfred.exception.AuthorizationException;
 import br.com.wferreiracosta.alfred.exception.DataIntegrityException;
 import br.com.wferreiracosta.alfred.models.Cidade;
 import br.com.wferreiracosta.alfred.models.Cliente;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -31,6 +35,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Optional<Cliente> findById(Integer id) {
+        final var user = UserServiceImpl.authenticated();
+
+        if(isNull(user) || !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso Negado");
+        }
+
         return this.clienteRepository.findById(id);
     }
 
