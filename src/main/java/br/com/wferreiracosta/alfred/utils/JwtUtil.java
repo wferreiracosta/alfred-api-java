@@ -49,6 +49,7 @@ public class JwtUtil {
         return false;
     }
 
+    // TODO Corrigir erro io.jsonwebtoken.ExpiredJwtException
     private Claims getClaims(String token) {
         return Jwts.parser().setSigningKey(secret.getBytes())
                 .parseClaimsJws(token)
