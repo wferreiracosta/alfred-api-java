@@ -1,5 +1,6 @@
 package br.com.wferreiracosta.alfred.services.impl;
 
+import br.com.wferreiracosta.alfred.models.Cliente;
 import br.com.wferreiracosta.alfred.models.Pedido;
 import br.com.wferreiracosta.alfred.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,22 @@ public abstract class EmailServiceImpl implements EmailService {
         Context context = new Context();
         context.setVariable("pedido", obj);
         return templateEngine.process("email/confirmacaoPedido", context);
+    }
+
+    @Override
+    public void sendNewPasswordEmail(Cliente cliente, String newPassword){
+        final var sm = prepareNewPasswordEmail(cliente, newPassword);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPassword) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(cliente.getEmail());
+        simpleMailMessage.setFrom(this.sender);
+        simpleMailMessage.setSubject("Solicitação de nova senha");
+        simpleMailMessage.setSentDate(new Date(System.currentTimeMillis()));
+        simpleMailMessage.setText("Nova senha: "+newPassword);
+        return simpleMailMessage;
     }
 
 }

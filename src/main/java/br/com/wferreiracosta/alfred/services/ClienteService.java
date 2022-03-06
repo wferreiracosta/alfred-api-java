@@ -8,12 +8,10 @@ import java.util.Optional;
 
 public interface ClienteService {
 
-    public Optional<Cliente> findById(Integer id);
-
-    public Cliente update(ClienteDTO objDTO);
-
-    public Optional<Cliente> delete(Integer id);
-
-    public Cliente insert(ClienteNewDTO clienteNewDTO);
-
+    Optional<Cliente> findById(Integer id);
+    Cliente update(ClienteDTO objDTO);
+    Optional<Cliente> delete(Integer id);
+    Cliente insert(ClienteNewDTO clienteNewDTO);
+    Cliente findByEmail(String email);
+    Cliente insert(Cliente cliente);
 }

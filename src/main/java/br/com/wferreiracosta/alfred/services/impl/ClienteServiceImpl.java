@@ -73,6 +73,17 @@ public class ClienteServiceImpl implements ClienteService {
         return this.clienteRepository.save(cliente);
     }
 
+    @Transactional
+    @Override
+    public Cliente insert(Cliente cliente) {
+        return this.clienteRepository.save(cliente);
+    }
+
+    @Override
+    public Cliente findByEmail(String email) {
+        return clienteRepository.findByEmail(email);
+    }
+
     public Cliente fromDTO(ClienteNewDTO objNewDTO) {
         var cli = new Cliente(null,
                 objNewDTO.getNome(),
